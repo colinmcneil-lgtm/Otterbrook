@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(CLIENT)
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id       String     @id @default(cuid())
+  name     String
+  website  String?
+  users    User[]
+  mandates Mandate[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Mandate {
+  id          String               @id @default(cuid())
+  title       String
+  description String
+  location    String
+  salaryRange String?
+  status      MandateStatus        @default(OPEN)
+  companyId   String
+  company     Company              @relation(fields: [companyId], references: [id])
+  candidates  CandidateOnMandate[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model Candidate {
+  id          String               @id @default(cuid())
+  name        String
+  email       String               @unique
+  linkedinUrl String?
+  notes       String?
+  mandates    CandidateOnMandate[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model CandidateOnMandate {
+  id          String         @id @default(cuid())
+  candidateId String
+  mandateId   String
+  candidate   Candidate      @relation(fields: [candidateId], references: [id])
+  mandate     Mandate        @relation(fields: [mandateId], references: [id])
+  stage       CandidateStage @default(SOURCED)
+  notes       String?
+  updatedAt   DateTime       @updatedAt
+
+  @@unique([candidateId, mandateId])
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum MandateStatus {
+  OPEN
+  CLOSED
+  ON_HOLD
+}
+
+enum CandidateStage {
+  SOURCED
+  SCREENING
+  SUBMITTED
+  CLIENT_INTERVIEW
+  OFFER
+  PLACED
+  REJECTED
+}
