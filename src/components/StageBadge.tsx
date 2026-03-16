@@ -1,8 +1,7 @@
-import { CandidateStage } from "@prisma/client";
 import { formatStage, stageColor } from "@/lib/utils";
 
 interface StageBadgeProps {
-  stage: CandidateStage;
+  stage: string;
   className?: string;
 }
 

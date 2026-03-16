@@ -6,7 +6,7 @@ import { CandidateCard } from "@/components/CandidateCard";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StageBadge } from "@/components/StageBadge";
 import { ALL_STAGES, formatStage } from "@/lib/utils";
-import { CandidateStage } from "@prisma/client";
+
 import Link from "next/link";
 
 export default async function MandatePage({
@@ -40,13 +40,13 @@ export default async function MandatePage({
 
   // Group candidates by stage
   const byStage = ALL_STAGES.reduce<
-    Record<CandidateStage, typeof mandate.candidates>
+    Record<string, typeof mandate.candidates>
   >((acc, stage) => {
     acc[stage] = mandate.candidates.filter((c) => c.stage === stage);
     return acc;
-  }, {} as Record<CandidateStage, typeof mandate.candidates>);
+  }, {} as Record<string, typeof mandate.candidates>);
 
-  const activeStages: CandidateStage[] = [
+  const activeStages: string[] = [
     "SOURCED",
     "SCREENING",
     "SUBMITTED",

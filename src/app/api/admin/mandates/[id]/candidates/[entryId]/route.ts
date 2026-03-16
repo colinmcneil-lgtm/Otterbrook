@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { CandidateStage } from "@prisma/client";
 
 export async function PATCH(
   req: NextRequest,
@@ -15,7 +14,7 @@ export async function PATCH(
 
   const { stage, notes } = await req.json();
 
-  const validStages: CandidateStage[] = [
+  const validStages: string[] = [
     "SOURCED", "SCREENING", "SUBMITTED", "CLIENT_INTERVIEW", "OFFER", "PLACED", "REJECTED",
   ];
 

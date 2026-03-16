@@ -1,4 +1,4 @@
-import { PrismaClient, Role, MandateStatus, CandidateStage } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -20,7 +20,7 @@ async function main() {
       email: "admin@otterbrook.com",
       password: adminPassword,
       name: "Admin User",
-      role: Role.ADMIN,
+      role: "ADMIN",
     },
   });
   console.log("✅ Created admin:", admin.email);
@@ -39,7 +39,7 @@ async function main() {
       email: "client@techcorp.com",
       password: techCorpClientPassword,
       name: "TechCorp Client",
-      role: Role.CLIENT,
+      role: "CLIENT",
       companyId: techCorp.id,
     },
   });
@@ -59,7 +59,7 @@ async function main() {
       email: "client@growthco.com",
       password: growthCoClientPassword,
       name: "GrowthCo Client",
-      role: Role.CLIENT,
+      role: "CLIENT",
       companyId: growthCo.id,
     },
   });
@@ -73,7 +73,7 @@ async function main() {
         "We are looking for a Senior Software Engineer to join our core platform team. You will be responsible for designing and building scalable backend systems that power our products. Strong experience with distributed systems and cloud infrastructure required.",
       location: "London, UK (Hybrid)",
       salaryRange: "£90,000 – £120,000",
-      status: MandateStatus.OPEN,
+      status: "OPEN",
       companyId: techCorp.id,
     },
   });
@@ -85,7 +85,7 @@ async function main() {
         "Seeking an experienced Product Manager to lead our consumer-facing product roadmap. You will work closely with engineering, design, and commercial teams to define and deliver features that delight users and drive business growth.",
       location: "London, UK (On-site)",
       salaryRange: "£75,000 – £95,000",
-      status: MandateStatus.OPEN,
+      status: "OPEN",
       companyId: techCorp.id,
     },
   });
@@ -97,7 +97,7 @@ async function main() {
         "We are hiring a Head of Data Science to build and lead our data science function. You will shape our ML strategy, manage a growing team, and partner with product and engineering to embed data-driven decision making across the business.",
       location: "Remote (UK)",
       salaryRange: "£110,000 – £140,000",
-      status: MandateStatus.ON_HOLD,
+      status: "ON_HOLD",
       companyId: techCorp.id,
     },
   });
@@ -112,7 +112,7 @@ async function main() {
         "GrowthCo is looking for a VP of Sales to own and scale our revenue function. You will build and manage a high-performing sales team, own the full sales cycle from pipeline generation to close, and work closely with the CEO on go-to-market strategy.",
       location: "New York, NY (Hybrid)",
       salaryRange: "$180,000 – $220,000 + Commission",
-      status: MandateStatus.OPEN,
+      status: "OPEN",
       companyId: growthCo.id,
     },
   });
@@ -124,7 +124,7 @@ async function main() {
         "We are seeking a Marketing Director to lead our brand, demand generation, and content strategy. You will own the marketing budget, manage a team of 5, and drive top-of-funnel growth across digital channels.",
       location: "New York, NY (On-site)",
       salaryRange: "$130,000 – $160,000",
-      status: MandateStatus.OPEN,
+      status: "OPEN",
       companyId: growthCo.id,
     },
   });
@@ -136,7 +136,7 @@ async function main() {
         "GrowthCo is hiring a Finance Manager to oversee financial planning, reporting, and analysis. You will support the CFO in strategic financial decisions, manage month-end close, and lead the annual budgeting process.",
       location: "New York, NY (Hybrid)",
       salaryRange: "$100,000 – $125,000",
-      status: MandateStatus.CLOSED,
+      status: "CLOSED",
       companyId: growthCo.id,
     },
   });
@@ -196,7 +196,7 @@ async function main() {
     data: {
       candidateId: candidate1.id,
       mandateId: tcMandate1.id,
-      stage: CandidateStage.CLIENT_INTERVIEW,
+      stage: "CLIENT_INTERVIEW",
       notes: "Excellent technical round. Client very positive. Final interview scheduled for next week.",
     },
   });
@@ -205,7 +205,7 @@ async function main() {
     data: {
       candidateId: candidate4.id,
       mandateId: tcMandate1.id,
-      stage: CandidateStage.SUBMITTED,
+      stage: "SUBMITTED",
       notes: "CV submitted to client. Awaiting feedback.",
     },
   });
@@ -214,7 +214,7 @@ async function main() {
     data: {
       candidateId: candidate2.id,
       mandateId: tcMandate2.id,
-      stage: CandidateStage.OFFER,
+      stage: "OFFER",
       notes: "Offer extended at £88,000. Candidate considering. Response expected by Friday.",
     },
   });
@@ -223,7 +223,7 @@ async function main() {
     data: {
       candidateId: candidate3.id,
       mandateId: gcMandate1.id,
-      stage: CandidateStage.PLACED,
+      stage: "PLACED",
       notes: "Accepted offer. Start date: 1st of next month. Great placement!",
     },
   });
@@ -232,7 +232,7 @@ async function main() {
     data: {
       candidateId: candidate5.id,
       mandateId: gcMandate2.id,
-      stage: CandidateStage.SCREENING,
+      stage: "SCREENING",
       notes: "First call done. Strong fit on experience. Moving to competency interview.",
     },
   });
@@ -241,7 +241,7 @@ async function main() {
     data: {
       candidateId: candidate1.id,
       mandateId: gcMandate1.id,
-      stage: CandidateStage.REJECTED,
+      stage: "REJECTED",
       notes: "Client felt background was too technical for a sales leadership role.",
     },
   });
@@ -250,7 +250,7 @@ async function main() {
     data: {
       candidateId: candidate4.id,
       mandateId: tcMandate3.id,
-      stage: CandidateStage.SOURCED,
+      stage: "SOURCED",
       notes: "Identified via LinkedIn. Strong ML background. Will reach out next week.",
     },
   });

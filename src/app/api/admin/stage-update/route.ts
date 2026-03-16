@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { CandidateStage } from "@prisma/client";
 
 // POST /api/admin/stage-update
 // Body: { candidateOnMandateId, stage, notes? }
@@ -14,7 +13,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const validStages: CandidateStage[] = [
+  const validStages: string[] = [
     "SOURCED", "SCREENING", "SUBMITTED", "CLIENT_INTERVIEW", "OFFER", "PLACED", "REJECTED",
   ];
 
@@ -44,7 +43,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "candidateId and mandateId required." }, { status: 400 });
     }
 
-    const stageValue: CandidateStage = validStages.includes(stage) ? stage : "SOURCED";
+    const stageValue: string = validStages.includes(stage) ? stage : "SOURCED";
 
     const entry = await prisma.candidateOnMandate.upsert({
       where: { candidateId_mandateId: { candidateId, mandateId } },

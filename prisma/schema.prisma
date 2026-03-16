@@ -15,7 +15,7 @@ model User {
   email     String   @unique
   password  String
   name      String
-  role      Role     @default(CLIENT)
+  role      String   @default("CLIENT")
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id])
   createdAt DateTime @default(now())
@@ -38,7 +38,7 @@ model Mandate {
   description String
   location    String
   salaryRange String?
-  status      MandateStatus        @default(OPEN)
+  status      String               @default("OPEN")
   companyId   String
   company     Company              @relation(fields: [companyId], references: [id])
   candidates  CandidateOnMandate[]
@@ -63,30 +63,10 @@ model CandidateOnMandate {
   mandateId   String
   candidate   Candidate      @relation(fields: [candidateId], references: [id])
   mandate     Mandate        @relation(fields: [mandateId], references: [id])
-  stage       CandidateStage @default(SOURCED)
+  stage       String         @default("SOURCED")
   notes       String?
   updatedAt   DateTime       @updatedAt
 
   @@unique([candidateId, mandateId])
 }
 
-enum Role {
-  ADMIN
-  CLIENT
-}
-
-enum MandateStatus {
-  OPEN
-  CLOSED
-  ON_HOLD
-}
-
-enum CandidateStage {
-  SOURCED
-  SCREENING
-  SUBMITTED
-  CLIENT_INTERVIEW
-  OFFER
-  PLACED
-  REJECTED
-}

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { MandateStatus } from "@prisma/client";
+
 
 export default async function AdminPage() {
   const [companies, mandates, candidates] = await Promise.all([
@@ -9,7 +9,7 @@ export default async function AdminPage() {
     prisma.candidate.count(),
   ]);
 
-  const openMandates = mandates.filter((m) => m.status === MandateStatus.OPEN).length;
+  const openMandates = mandates.filter((m) => m.status === "OPEN").length;
   const activeCandidates = mandates.reduce(
     (sum, m) =>
       sum +

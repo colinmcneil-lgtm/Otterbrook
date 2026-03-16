@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { MandateStatus } from "@prisma/client";
 
 export async function PATCH(
   req: NextRequest,
@@ -16,7 +15,7 @@ export async function PATCH(
   const body = await req.json();
   const { title, description, location, salaryRange, status } = body;
 
-  const validStatuses: MandateStatus[] = ["OPEN", "CLOSED", "ON_HOLD"];
+  const validStatuses: string[] = ["OPEN", "CLOSED", "ON_HOLD"];
 
   const mandate = await prisma.mandate.update({
     where: { id: params.id },

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
 import { StageBadge } from "@/components/StageBadge";
 import { ALL_STAGES, formatStage } from "@/lib/utils";
-import { CandidateStage } from "@prisma/client";
 import AdminMandateActions from "./AdminMandateActions";
 
 export default async function AdminMandateDetailPage({
@@ -34,11 +33,11 @@ export default async function AdminMandateDetailPage({
   const unassignedCandidates = allCandidates.filter((c) => !assignedIds.has(c.id));
 
   const byStage = ALL_STAGES.reduce<
-    Record<CandidateStage, typeof mandate.candidates>
+    Record<string, typeof mandate.candidates>
   >((acc, stage) => {
     acc[stage] = mandate.candidates.filter((c) => c.stage === stage);
     return acc;
-  }, {} as Record<CandidateStage, typeof mandate.candidates>);
+  }, {} as Record<string, typeof mandate.candidates>);
 
   return (
     <div className="p-8 max-w-5xl mx-auto">

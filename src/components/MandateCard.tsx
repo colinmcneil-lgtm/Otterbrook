@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Mandate, CandidateOnMandate } from "@prisma/client";
 import { StatusBadge } from "./StatusBadge";
 import { formatStage } from "@/lib/utils";
-import { CandidateStage } from "@prisma/client";
 
 type MandateWithCandidates = Mandate & {
   candidates: CandidateOnMandate[];
@@ -21,7 +20,7 @@ export function MandateCard({ mandate, href, showCompany = false }: MandateCardP
     return acc;
   }, {});
 
-  const activeStages: CandidateStage[] = ["SOURCED", "SCREENING", "SUBMITTED", "CLIENT_INTERVIEW", "OFFER"];
+  const activeStages: string[] = ["SOURCED", "SCREENING", "SUBMITTED", "CLIENT_INTERVIEW", "OFFER"];
   const activeCandidates = mandate.candidates.filter((c) => activeStages.includes(c.stage));
 
   return (
@@ -75,7 +74,7 @@ export function MandateCard({ mandate, href, showCompany = false }: MandateCardP
                 .slice(0, 3)
                 .map(([stage, count]) => (
                   <span key={stage} className="text-xs text-gray-500">
-                    {formatStage(stage as CandidateStage)}: {count}
+                    {formatStage(stage)}: {count}
                   </span>
                 ))}
             </div>

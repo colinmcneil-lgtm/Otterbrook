@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { CandidateStage } from "@prisma/client";
 
 export async function POST(
   req: NextRequest,
@@ -19,10 +18,10 @@ export async function POST(
     return NextResponse.json({ error: "candidateId is required." }, { status: 400 });
   }
 
-  const validStages: CandidateStage[] = [
+  const validStages: string[] = [
     "SOURCED", "SCREENING", "SUBMITTED", "CLIENT_INTERVIEW", "OFFER", "PLACED", "REJECTED",
   ];
-  const candidateStage: CandidateStage = validStages.includes(stage) ? stage : "SOURCED";
+  const candidateStage: string = validStages.includes(stage) ? stage : "SOURCED";
 
   const entry = await prisma.candidateOnMandate.create({
     data: {

@@ -1,8 +1,7 @@
-import { MandateStatus } from "@prisma/client";
 import { formatStatus, statusColor } from "@/lib/utils";
 
 interface StatusBadgeProps {
-  status: MandateStatus;
+  status: string;
   className?: string;
 }
 
